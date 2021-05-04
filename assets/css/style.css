@@ -1,0 +1,14 @@
+/* all custom styles */
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+.jumbotron {
+    padding: 10px 0;
+    margin-bottom: 3px;
+    color: whitesmoke;
+    background-color: darkslategray;
+}
+.col {
+    padding: 5px;
+    background-color: whitesmoke;
+}
