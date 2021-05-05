@@ -20,23 +20,52 @@
     <div class="container-fluid">
         <div class="row">
             <!-- left section for search -->
-            <div class="col col-md-3 col-xs-12">
+            <div class="col col-md-3 col-xs-12 bg-light">
                 <div class="card">  
                     <form>
                         <div class="input-group">
-                            <label class="p-1 m-0" for="search-city">Seach for a City:</label>
-                            <input type="text" class="ml-1" id="search-city">
-                            <button type="submit" class="btn btn-primary"><span class="fa fa-search"></span></button>
-                          </div>
+                            <label class="pt-2 ml-2" for="search-city">Seach for a City:</label>
+                            <input type="text" class="ml-2 mb-3" id="search-city">
+                            <button type="submit" class="btn btn-primary mb-3"><span class="fa fa-search"></span></button>
+                        </div>
                     </form>
-                    <div class="city-list"></div>
+                    <!-- prototype for city list -->
+                    <div>
+                        <ul class="list-group" id="city-names">
+                          <li class="list-group-item p-2 ml-2">An item</li>
+                          <li class="list-group-item p-2 ml-2">A second item</li>
+                          <li class="list-group-item p-2 ml-2">A third item</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-            <!-- right section for display -->
-            <div class="col col-md-9 col-xs-12 pl-0">
+            <!-- right section for display (prototype) -->
+            <div class="col col-md-9 col-xs-12 pl-0 bg-light">
                 <div class="card">  
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
+                    <h5 class="p-1 ml-2 mt-4" id="city-name">City Name</h5>
+                    <p class="p-1 ml-2 mb-0" id="temp">Temperature</p>
+                    <p class="p-1 ml-2 mb-0" id="humidity">Humidity</p>
+                    <p class="p-1 ml-2 mb-0" id="wind-speed">Wind Speed</p>
+                    <p class="p-1 ml-2 mb-3" id="uv-index">UV Index</p>
+                </div>
+                <div class="card">  
+                    <h5 class="p-1 ml-2 mt-1" id="city-name">5-Day Forecast:</h5>
+                    <div class="d-flex flex-row">
+                        <div class="col-sm-2">
+                            <label class="btn btn-primary text-left">5/4/2020<br>sdskdjf<br>Temp: <br> Humidity:</label>
+                        </div>
+                        <div class="col-sm-2">
+                            <label class="btn btn-primary">Day 2</label>
+                        </div>
+                        <div class="col-sm-2">
+                            <label class="btn btn-primary">Day 3</label>
+                        </div>
+                        <div class="col-sm-2">
+                            <label class="btn btn-primary">Day 4</label>
+                        </div>
+                        <div class="col-sm-2">
+                            <label class="btn btn-primary">Day 5</label>
+                        </div>
                     </div>
                 </div>
             </div>
