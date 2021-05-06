@@ -10,7 +10,6 @@ console.log(weatherDataJson);
 var cityEl = $("#search-city");
 // var cityNameEl = $("#city-name");
 var cityListEl = $("#city-list");
-var city = 'London';
 // console.log(cityNameEl);
 
 var cityData = {
@@ -24,75 +23,39 @@ var cityData = {
     days: []
 };
 
-// event handler for search button
-$('#searchBtn').on('click', searchCity);
 
-// event handler for city list
-function processCity(event) {
-    event.preventDefault();
-    console.log(event.target);
-    console.log($(event.target).parent());
 
-    if (event.target.id.indexOf('close') > 0) {
-        console.log("Close");
-        $(event.target).parent().remove();
-    }
-    else {
-        console.log("search");
-    }
-}
 
-// update list of cities
-function updateCityList() {
-    // template
-    // <li class="list-group-item p-2 ml-2 mr-2">An item<span class="btn close btn-secondary">X</span></li>
 
-    // list item
-    var liEl = $('<li>');
-    liEl.addClass('list-group-item', 'p-2', 'ml-2', 'mr-2');
-    liEl.attr('id', city);
-    liEl.text(city);
-    liEl.on('click', processCity);
 
-    // close button
-    var spanEl = $('<span>');
-    spanEl.addClass('btn close btn-secondary');
-    spanEl.text('X');
-    spanEl.attr('id', city+'-close');
 
-    // add close button to list item
-    liEl.append(spanEl);
 
-    // add list item to ul
-    cityListEl.append(liEl);
 
-    //  clear search field
-    cityEl.val('');
-}
 
-// search for this city
-function searchCity(event) {
-    event.preventDefault();
 
-    city = cityEl.val();
-    console.log(city);   
-    // if nothing is entered, show error message for 5sec
-    if (!city) {
-        cityNameEl.text("Please enter a valid city name, it can't be blank!");
-    }
-    else {
-        if (getWeatherData()) {
-            updateCityList();
-        }
-        else {
-            cityNameEl.text("No weather data found for this city, please check if city name is valid!");
-        }
-    }
-}
+// load data from localStorage at startup
+// add event handler for search, alert for blank entries
+// look for city in stored data, if entry exists then get lat/lon from list
+// else fetch it from api
+// if fetch was successul, then 
+    // - update citi list array and display in page, 
+    // - store in local storage 
+    // - fetch weather data and display in page (show error if fetch was unsuccesful)
+// else show error message
+// read following code from bottom up
+
+// variables
+var cities = [];
+var city, cityIndex;
+var cityEl = $("#search-city");
+var cityNameEl = $("#city-name");
+var cityListEl = $("#city-list");
 
 // get weatherData
 function getWeatherData() {
-    // get latitude and longitude of the city
+
+    // fetch goes here
+
     // current data
     cityData.name = city;
     cityData.icon = weatherDataJson.current.weather[0].icon;
@@ -124,7 +87,131 @@ function getWeatherData() {
         console.log(newDay);     
         cityData.days.push(newDay);
     }
-    return true;
 }
 
-console.log(cityData);
+// paint page with city data
+function displayCityData() {
+    console.log(cityData);
+}
+
+// event handler for city from list
+function processCityFromList(event) {
+    event.preventDefault();
+    
+    console.log($(event.target).parent());
+    city = event.target.id;
+
+    if (event.target.id.indexOf('close') > 0) {
+        // console.log("Close");
+        city = event.target.id.split('-')[0];
+        // console.log(city);
+
+        cityIndex = getCitiIndex();
+        cities.splice(cityIndex);
+        saveCities();
+        $(event.target).parent().remove();
+    }
+    else {
+        console.log("search");        
+        processCity();
+    }
+}
+
+// update city list and also save to local storage
+function updateCityList() {
+    // template
+    // <li class="list-group-item p-2 ml-2 mr-2">An item<span class="btn close btn-secondary">X</span></li>
+
+    // list item
+    var liEl = $('<li>');
+    liEl.addClass('list-group-item', 'p-2', 'ml-2', 'mr-2');
+    liEl.attr('id', city);
+    liEl.text(city);
+    liEl.on('click', processCityFromList);
+
+    // close button
+    var spanEl = $('<span>');
+    spanEl.addClass('btn close btn-secondary');
+    spanEl.text('X');
+    spanEl.attr('id', city+'-close');
+
+    // add close button to list item
+    liEl.append(spanEl);
+
+    // add list item to ul
+    cityListEl.append(liEl);
+
+    //  clear search field
+    cityEl.val('');
+}
+
+// get index of city for lat/lon, first from local storage, otherwise fetch
+// if we fetch then save city data
+function getCitiIndex() {
+    console.log(cities);
+    for (var i = 0; i < cities.length; i++) {
+        if (city == cities[i].name) {
+            return i;
+        }
+    }
+    // we came here because we didn't find city in local storage
+    var citiData = new Object();
+    citiData.name = city;
+    citiData.lat = latLonDataJson.coord.lat;
+    citiData.lon = latLonDataJson.coord.lon;
+    cities.push(citiData);
+    updateCityList();
+    saveCities();
+    return cities.length;
+}
+
+// process this city
+function processCity() {
+    cityIndex = getCitiIndex();        
+    getWeatherData();
+    displayCityData();
+}
+
+// search city in local storage, or fetch it from api
+function searchCity(event) {
+    event.preventDefault();
+
+    city = cityEl.val();
+    console.log(city);   
+    // if nothing is entered, show error message 
+    if (!city) {
+        cityNameEl.text("Please enter a valid city name, it can't be blank!");
+    }
+    else {
+        processCity();
+    }
+}
+
+// add event handler for search, alert for blank entries
+$('#searchBtn').on('click', searchCity);
+
+// function to save cities to local storage
+function saveCities() {
+    console.log('saveCities');
+    var str = JSON.stringify(cities);
+    localStorage.setItem('cities', str);
+}
+
+// function load saved cities
+function loadSavedCities() {
+    console.log('loadSavedCities');
+    var str = localStorage.getItem('cities');
+    cities = JSON.parse(str);
+    if (!cities) {
+        cities = [];
+    }
+    else {
+        for (var i = 0; i < cities.length; i++){
+            city = cities[i].name;
+            updateCityList();
+        }        
+    }
+}
+
+// load data from localStorage at startup
+$(document).ready(loadSavedCities);
