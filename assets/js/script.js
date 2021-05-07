@@ -11,7 +11,7 @@
 
 // variables
 var cities = [];
-var city, cityIndex, lat, lon;
+var city, cityIndex;
 // left pane elements
 var cityEl = $("#search-city");
 var cityListEl = $("#city-list");
@@ -37,11 +37,8 @@ var latLonUrl = "http://api.openweathermap.org/data/2.5/weather?APPID=8c7e403a27
 var apiUrl = "http://api.openweathermap.org/data/2.5/onecall?units=imperial&APPID=8c7e403a27389df68e6767e6fd7acaca&";
 
 // get weatherData
-function getWeatherData(city, lat, lon) {
+function getWeatherData(lat, lon) {
     // fetch goes here
-    // lat = cities[cityIndex].lat;
-    // lon = cities[cityIndex].lon;
-
     var url = apiUrl + "lat=" + lat + "&lon=" + lon;
     fetch(url, {cache: 'no-store'}) 
         .then(function(response) {
@@ -250,6 +247,7 @@ function displayCityData() {
     city5dayEl.append(div5El);
 }
 
+// get index of city from the list
 function getCitiIndex() {
     for (var i = 0; i < cities.length; i++) {
         if (city == cities[i].name) {
@@ -313,6 +311,7 @@ function updateCityList() {
 function processCity() {
     // find city in list
     var found = false;
+    var lat, lon;
     for (var i = 0; i < cities.length; i++) {
         if (city == cities[i].name) {
             cityIndex = i;
@@ -325,7 +324,7 @@ function processCity() {
     if (found) {
         lat = cities[cityIndex].lat;
         lon = cities[cityIndex].lon;
-        getWeatherData(city, lat, lon);
+        getWeatherData(lat, lon);
     } 
     else {
         // we came here because we didn't find city in local storage
@@ -356,7 +355,7 @@ function processCity() {
                 cityIndex = cities.length;
                 updateCityList();
                 saveCities();
-                getWeatherData(city, lat, lon);
+                getWeatherData(lat, lon);
             })
             .catch(function(error) {
                 cityCurrentEl.html("<h5 class='p-1 ml-2 mt-2'>" + error.message + "<h5>");
