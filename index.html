@@ -20,13 +20,15 @@
     <div class="container-fluid">
         <div class="row">
             <!-- left section for search -->
-            <div class="col-lg-3 col-xs-12 bg-light">
+            <div class="col-lg-4 col-xs-12 bg-light">
                 <div class="card">  
                     <form>
                         <div class="input-group">
                             <label class="pt-2 ml-2" for="search-city">Seach for a City:</label>
-                            <input type="text" class="ml-2 mb-3" id="search-city">
-                            <button type="submit" class="btn btn-primary mb-3" id="searchBtn"><span class="fa fa-search"></span></button>
+                            <input type="text" class="form-control ml-2 mb-3" id="search-city">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-primary mb-3" id="searchBtn"><span class="fa fa-search"></span></button>
+                            </div>                            
                         </div>
                     </form>
                     <!-- placeholder for city list -->
@@ -36,7 +38,7 @@
                 </div>
             </div>
             <!-- right section for display  -->
-            <div class="col-lg-9 col-xs-12 pl-0 bg-light" id="city-data">
+            <div class="col-lg-8 col-xs-12 pl-0 bg-light" id="city-data">
                 <!-- placeholder for displaying result -->
                 <div class="card" id="city-current"></div>
                 <div class="card" id="city-5day"></div>
