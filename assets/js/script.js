@@ -34,11 +34,12 @@ console.log(weatherDataJson);
 // variables
 var cities = [];
 var city, cityIndex;
+// left pane elements
 var cityEl = $("#search-city");
-var cityNameEl = $("#city-name");
 var cityListEl = $("#city-list");
-var cityDataEl = $("#city-data");
+// right pane elements
 var cityCurrentEl = $("#city-current");
+var city5dayEl = $("#city-5day");
 
 // current and forecast data
 var cityData = {
@@ -121,14 +122,21 @@ function displayCityData() {
     //     </div>
     // </div>
 
+    // empty divs
+    cityCurrentEl.empty();
+    city5dayEl.empty();
+
     // weather icon url
     // var iconUrl = "http://openweathermap.org/img/wn/10d@2x.png"
-    var iconUrl = "http://openweathermap.org/img/wn/"
+    var iconUrl = "<img src=http://openweathermap.org/img/wn/"
 
-    // name
-    var img = "<img src=http://openweathermap.org/img/wn/" + cityData.icon + "@2x.png>";
-    cityNameEl.html(city + " (" + cityData.date + ") " + img);
     var divEl = $('<div>');
+    // name
+    var nameEl = $('<h5>');
+    nameEl.addClass('p-1 ml-2 mt-2');
+    var img = iconUrl + cityData.icon + "@2x.png>";
+    nameEl.html(city + " (" + cityData.date + ") " + img);
+    divEl.append(nameEl);
 
     // temperature
     var p1El = $('<p>');
@@ -185,20 +193,21 @@ function displayCityData() {
 
     // <div class="d-flex flex-row"></div>
     var divFlex = $('<div>');
-    divFlex.addClass("d-flex flex-row");
+    divFlex.addClass("d-flex flex-lg-row flex-column");
 
     //         <div class="col-sm-2">
     //             <!-- <label class="btn btn-primary text-left">5/4/2020<br>sdskdjf<br>Temp: <br> Humidity:</label> -->
     //             <label class="btn btn-primary text-left">Day 1</label>
     //         </div>
     // day1
+    var divClass = "col-lg-2 col-12";
+    var labelClass = "btn btn-primary text-left";
     var divDay1 = $('<div>');
-    divDay1.addClass("col-sm-2");
+    divDay1.addClass(divClass);
     var label1 = $('<label>');
-    label1.addClass("btn btn-primary text-left");
-    img = "<img src=http://openweathermap.org/img/wn/" + cityData.days[0].ficon + "@2x.png>";
-    var label1Text = "<span class=font-weight-bold>" + cityData.days[0].fdate + "</span><br>";
-    label1Text += img + "<br>";
+    label1.addClass(labelClass);
+    img = iconUrl + cityData.days[0].ficon + "@2x.png>";
+    var label1Text = "<span class=font-weight-bold>" + cityData.days[0].fdate + "</span> " + img + "<br>";
     label1Text += "Temp: " + cityData.days[0].ftemp + "<span>&#8457;</span>" + "<br>";
     label1Text += "Humidity: " + cityData.days[0].fhumidity + "%";
     // console.log(label1Text);
@@ -208,12 +217,11 @@ function displayCityData() {
 
     // day 2
     var divDay2 = $('<div>');
-    divDay2.addClass("col-sm-2");
+    divDay2.addClass(divClass);
     var label2 = $('<label>');
-    label2.addClass("btn btn-primary text-left");
-    img = "<img src=http://openweathermap.org/img/wn/" + cityData.days[1].ficon + "@2x.png>";
-    var label2Text = "<span class=font-weight-bold>" + cityData.days[1].fdate + "</span><br>";
-    label2Text += img + "<br>";
+    label2.addClass(labelClass);
+    img = iconUrl + cityData.days[1].ficon + "@2x.png>";
+    var label2Text = "<span class=font-weight-bold>" + cityData.days[1].fdate + "</span> "+ img + "<br>";
     label2Text += "Temp: " + cityData.days[1].ftemp + "<span>&#8457;</span>" + "<br>";
     label2Text += "Humidity: " + cityData.days[1].fhumidity + "%";
     // console.log(label2Text);
@@ -223,12 +231,11 @@ function displayCityData() {
 
     // day 3
     var divDay3 = $('<div>');
-    divDay3.addClass("col-sm-2");
+    divDay3.addClass(divClass);
     var label3 = $('<label>');
-    label3.addClass("btn btn-primary text-left");
-    img = "<img src=http://openweathermap.org/img/wn/" + cityData.days[2].ficon + "@2x.png>";
-    var label3Text = "<span class=font-weight-bold>" + cityData.days[2].fdate + "</span><br>";
-    label3Text += img + "<br>";
+    label3.addClass(labelClass);
+    img = iconUrl + cityData.days[2].ficon + "@2x.png>";
+    var label3Text = "<span class=font-weight-bold>" + cityData.days[2].fdate + "</span> "+ img + "<br>";
     label3Text += "Temp: " + cityData.days[2].ftemp + "<span>&#8457;</span>" + "<br>";
     label3Text += "Humidity: " + cityData.days[2].fhumidity + "%";
     // console.log(label3Text);
@@ -238,12 +245,11 @@ function displayCityData() {
 
     // day 4
     var divDay4 = $('<div>');
-    divDay4.addClass("col-sm-2");
+    divDay4.addClass(divClass);
     var label4 = $('<label>');
-    label4.addClass("btn btn-primary text-left");
-    img = "<img src=http://openweathermap.org/img/wn/" + cityData.days[3].ficon + "@2x.png>";
-    var label4Text = "<span class=font-weight-bold>" + cityData.days[3].fdate + "</span><br>";
-    label4Text += img + "<br>";
+    label4.addClass(labelClass);
+    img = iconUrl + cityData.days[3].ficon + "@2x.png>";
+    var label4Text = "<span class=font-weight-bold>" + cityData.days[3].fdate + "</span> "+ img + "<br>";
     label4Text += "Temp: " + cityData.days[3].ftemp + "<span>&#8457;</span>" + "<br>";
     label4Text += "Humidity: " + cityData.days[3].fhumidity + "%";
     // console.log(label4Text);
@@ -253,12 +259,11 @@ function displayCityData() {
 
     // day 5
     var divDay5 = $('<div>');
-    divDay5.addClass("col-sm-2");
+    divDay5.addClass(divClass);
     var label5 = $('<label>');
-    label5.addClass("btn btn-primary text-left");
-    img = "<img src=http://openweathermap.org/img/wn/" + cityData.days[4].ficon + "@2x.png>";
-    var label5Text = "<span class=font-weight-bold>" + cityData.days[4].fdate + "</span><br>";
-    label5Text += img + "<br>";
+    label5.addClass(labelClass);
+    img = iconUrl + cityData.days[4].ficon + "@2x.png>";
+    var label5Text = "<span class=font-weight-bold>" + cityData.days[4].fdate + "</span> "+ img + "<br>";
     label5Text += "Temp: " + cityData.days[4].ftemp + "<span>&#8457;</span>" + "<br>";
     label5Text += "Humidity: " + cityData.days[4].fhumidity + "%";
     // console.log(label5Text);
@@ -268,7 +273,7 @@ function displayCityData() {
 
     div5El.append(divFlex);
     // finally add div5El to the top div
-    cityDataEl.append(div5El);
+    city5dayEl.append(div5El);
 }
 
 // event handler for city from list
@@ -357,7 +362,7 @@ function searchCity(event) {
     console.log(city);   
     // if nothing is entered, show error message 
     if (!city) {
-        cityNameEl.text("Please enter a valid city name, it can't be blank!");
+        cityCurrentEl.html("<h5 class='p-1 ml-2 mt-2'>Please enter a valid city name, it can't be blank!<h5>");
     }
     else {
         processCity();
