@@ -37,13 +37,13 @@ var latLonUrl = "http://api.openweathermap.org/data/2.5/weather?APPID=8c7e403a27
 var apiUrl = "http://api.openweathermap.org/data/2.5/onecall?units=imperial&APPID=8c7e403a27389df68e6767e6fd7acaca&";
 
 // get weatherData
-function getWeatherData() {
+function getWeatherData(city, lat, lon) {
     // fetch goes here
-    lat = cities[cityIndex].lat;
-    lon = cities[cityIndex].lon;
+    // lat = cities[cityIndex].lat;
+    // lon = cities[cityIndex].lon;
 
     var url = apiUrl + "lat=" + lat + "&lon=" + lon;
-    fetch(url) 
+    fetch(url, {cache: 'no-store'}) 
         .then(function(response) {
             // verify response and act accordingly
             if (response.ok) {
@@ -55,6 +55,7 @@ function getWeatherData() {
         .then(function(data) {
             // process data
             // current data
+            // console.log(data)
             cityData.name = city;
             cityData.icon = data.current.weather[0].icon;
             cityData.date = moment.unix(data.current.dt).format("MM/DD/YYYY");
@@ -132,24 +133,29 @@ function displayCityData() {
 
     // uvi
     var p4El = $('<p>');
-    var bg_color; 
-    if (cityData.uvi > 11) {
+    var bg_color, severity; 
+    if (cityData.uvi >= 11) {
         bg_color = "p-2 bg-dark";
+        severity = "Extreme";
     }
     else if (cityData.uvi > 7) {
         bg_color = "p-2 bg-danger";
+        severity = "Very High";
     }
     else if (cityData.uvi > 5) {
         bg_color = "p-2 bg-secondary";
+        severity = "High";
     }
     else if (cityData.uvi > 2) {
         bg_color = "p-2 bg-warning";
+        severity = "Moderate";
     }
     else {
         bg_color = "p-2 bg-success";
+        severity = "Low";
     }
     p4El.addClass("p-1 ml-2 mb-4 mt-2");
-    p4El.html("UV Index: " + "<span class='" + bg_color + "'>" + cityData.uvi + "</span");
+    p4El.html("UV Index: " + "<span class='" + bg_color + "'>" + cityData.uvi + "</span>");
     divEl.append(p4El);
 
     cityCurrentEl.append(divEl);
@@ -266,6 +272,8 @@ function processCityFromList(event) {
         cities.splice(cityIndex);
         saveCities();
         $(event.target).parent().remove();
+        cityCurrentEl.empty();
+        city5dayEl.empty();
     }
     else {    
         processCity();
@@ -315,19 +323,23 @@ function processCity() {
 
     // get weather data
     if (found) {
-        getWeatherData();
+        lat = cities[cityIndex].lat;
+        lon = cities[cityIndex].lon;
+        getWeatherData(city, lat, lon);
     } 
     else {
         // we came here because we didn't find city in local storage
         // fetch data by making api call
         var url = latLonUrl + city;
-        fetch(url) 
+        fetch(url, {cache: 'reload'}) 
             .then(function(response) {
                 // verify response and act accordingly
                 if (response.ok) {
                     return response.json();
                 } else {
-                    throw new Error("Error: " + response.statusText);
+                    cityCurrentEl.empty();
+                    city5dayEl.empty();
+                    throw new Error("Error: " + city + " " + response.statusText);
                 }
             })
             .then(function(data) {
@@ -341,11 +353,10 @@ function processCity() {
                 citiData.lat = lat;
                 citiData.lon = lon;
                 cities.push(citiData);
-
+                cityIndex = cities.length;
                 updateCityList();
                 saveCities();
-                cityIndex = cities.length;
-                getWeatherData();
+                getWeatherData(city, lat, lon);
             })
             .catch(function(error) {
                 cityCurrentEl.html("<h5 class='p-1 ml-2 mt-2'>" + error.message + "<h5>");
