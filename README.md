@@ -4,11 +4,11 @@ Dashboard for weather outlook for multiple cities.
 Create a Weather Dashboard application that allows a user to to retrieve weather data for cities. The documentation includes a section called "How to start" that provides basic setup and usage instructions.
 
 ## Getting Started
-Code: [Code](https://github.com/manzur-shaheed/ms-work-day-scheduler)
+Code: [Code](https://github.com/manzur-shaheed/ms-weather-dashboard)
 
-Live: [github pages](https://manzur-shaheed.github.io/ms-work-day-scheduler/)
+Live: [github pages](https://manzur-shaheed.github.io/ms-weather-dashboard/)
 
-You can clone code from [github link](https://github.com/manzur-shaheed/ms-work-day-scheduler) and run it locally on your computer.
+You can clone code from [github link](https://github.com/manzur-shaheed/ms-weather-dashboard) and run it locally on your computer.
 
 ### Prerequisites
 
@@ -23,7 +23,7 @@ A computer with browser that supports javascript. To clone code from github, you
 - Issue the following command -
 
 ```
-git clone git@github.com:manzur-shaheed/ms-work-day-scheduler.git
+git clone git@github.com:manzur-shaheed/ms-weather-dashboard.git
 ```
 You can then run this tool by opening index.html page from this directory in a browser.
 
