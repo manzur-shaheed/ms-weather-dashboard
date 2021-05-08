@@ -333,6 +333,7 @@ function processCity() {
         fetch(url, {cache: 'reload'}) 
             .then(function(response) {
                 // verify response and act accordingly
+                console.log(response);
                 if (response.ok) {
                     return response.json();
                 } else {
