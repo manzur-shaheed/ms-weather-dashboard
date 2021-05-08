@@ -32,9 +32,9 @@ var cityData = {
 };
 
 // URLs for API Calls, first one is for latitude/longitude, second one for weather data
-var latLonUrl = "http://api.openweathermap.org/data/2.5/weather?APPID=8c7e403a27389df68e6767e6fd7acaca&q=";
+var latLonUrl = "https://api.openweathermap.org/data/2.5/weather?APPID=8c7e403a27389df68e6767e6fd7acaca&q=";
 
-var apiUrl = "http://api.openweathermap.org/data/2.5/onecall?units=imperial&APPID=8c7e403a27389df68e6767e6fd7acaca&";
+var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?units=imperial&APPID=8c7e403a27389df68e6767e6fd7acaca&";
 
 // get weatherData
 function getWeatherData(lat, lon) {
@@ -100,7 +100,7 @@ function displayCityData() {
 
     // weather icon url
     // var iconUrl = "http://openweathermap.org/img/wn/10d@2x.png"
-    var iconUrl = "<img src=http://openweathermap.org/img/wn/"
+    var iconUrl = "<img src=https://openweathermap.org/img/wn/"
 
     var divEl = $('<div>');
     // name
