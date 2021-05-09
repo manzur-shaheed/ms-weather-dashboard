@@ -267,7 +267,7 @@ function processCityFromList(event) {
     if (event.target.id.indexOf('close') > 0) {
         city = event.target.id.split('-')[0];
         cityIndex = getCitiIndex();
-        cities.splice(cityIndex);
+        cities.splice(cityIndex, 1);
         saveCities();
         $(event.target).parent().remove();
         cityCurrentEl.empty();
